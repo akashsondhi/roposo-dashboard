@@ -1,0 +1,45 @@
+<div class="col-xs-8 col-xs-offset-2">
+    <section id="search">
+        <label for="search-input"><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">Search</span></label>
+        <input id="search-input" class="form-control input-lg" ng-model="searchValue" placeholder="Search" autocomplete="off">
+        <a id="search-clear" href="#" class="fa fa-times-circle" ng-click="searchValue = null" ng-show="searchValue.length" aria-hidden="true"><span class="sr-only">Clear search</span></a>
+    </section>
+    <div ng-if="allCardsData.length === 0">
+        <p class="no-item">No items exist. Create one.</p>
+    </div>
+    <div ng-if="allCardsData.length && ((allCardsData | filter:searchValue).length)===0">
+        <p class="no-item">No items exist with the given search.</p>
+    </div>
+    <div class="col-xs-offset-1" ng-if="!isGridView">
+        <div class="card-container col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 col-xs-8 col-xs-offset-2" ng-repeat="card in allCardsData | filter:searchValue track by $index">
+
+            <img src="../roposo-thumbnail.png" class="card-image" />
+            <div class="card-title" title="{{card.title}}" ng-bind="card.title" ng-click="enableEdit($index)" ng-hide="isEditable[card.id] || card.isCardNew"></div>
+            <div class="card-title-input" ng-show="isEditable[card.id] || card.isCardNew">
+                <textarea type="text" placeholder="Add title here" ng-blur="updateCardTitle(card.title,card.id)" ng-model="card.title" autofocus> </textarea>
+            </div>
+            <div class="card-desc" ng-bind="card.desc" ng-hide="card.isCardNew"></div>
+            <div class="card-desc-input" ng-show="card.isCardNew">
+                <textarea type="text" placeholder="Add some description here.." ng-blur="updateCardDesc(card.desc,card.id)" ng-model="card.desc"></textarea>
+            </div>
+            <button class="btn btn-primary col-xs-12" ng-click="deleteCard(card.id)">Delete this card</button>
+
+        </div>
+    </div>
+    <div class="list-view-card-container col-xs-12" ng-repeat="card in allCardsData | filter:searchValue track by $index" ng-if="isGridView">
+        <div class="row">
+            <div class="col-xs-4"><img src="../roposo-thumbnail.png" class="card-image" /></div>
+            <div class="card-info-container col-xs-7 col-xs-offset-1">
+                <div class="card-title" ng-bind="card.title" ng-click="enableEdit(card.id)" ng-hide="isEditable[card.id] || card.isCardNew"></div>
+                <div class="card-title-input" ng-show="isEditable[card.id] || card.isCardNew">
+                    <textarea type="text" placeholder="Add title here" ng-blur="updateCardTitle(card.title,card.id)" ng-model="card.title" autofocus></textarea>
+                </div>
+                <div class="card-desc" ng-bind="card.desc" ng-hide="card.isCardNew"></div>
+                <div class="card-desc-input" ng-show="card.isCardNew">
+                    <textarea type="text" placeholder="Add some description here.." ng-blur="updateCardDesc(card.desc,card.id)" ng-model="card.desc"></textarea>
+                </div>
+                <button class="btn btn-primary" ng-click="deleteCard(card.id)">Delete this card</button>
+            </div>
+        </div>
+    </div>
+</div>
