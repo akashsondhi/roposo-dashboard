@@ -14,7 +14,7 @@
         <div class="card-container col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 col-xs-8 col-xs-offset-2" ng-repeat="card in allCardsData | filter:searchValue track by $index">
 
             <img src="../roposo-thumbnail.png" class="card-image" />
-            <div class="card-title" title="{{card.title}}" ng-bind="card.title" ng-click="enableEdit($index)" ng-hide="isEditable[card.id] || card.isCardNew"></div>
+            <div class="card-title" title="{{card.title}}" ng-bind="card.title" ng-click="enableEdit(card.id)" ng-hide="isEditable[card.id] || card.isCardNew"></div>
             <div class="card-title-input" ng-show="isEditable[card.id] || card.isCardNew">
                 <textarea type="text" placeholder="Add title here" ng-blur="updateCardTitle(card.title,card.id)" ng-model="card.title" autofocus> </textarea>
             </div>
